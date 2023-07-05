@@ -13,5 +13,5 @@ This repository contains a powerful shell script that visualizes the directory s
 
 To use the script, simply run it with the directory you want to visualize as an argument:
 
-```bash
-./print_hierarchy.sh /path/to/directory
+```
+bash print_hierarchy.sh
