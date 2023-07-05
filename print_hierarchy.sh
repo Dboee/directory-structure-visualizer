@@ -1,21 +1,28 @@
 #!/bin/bash
 
-# Read .gitignore and convert it to an array
-# If you want to ignore different files, add them to the .gitignore file
-mapfile -t ignore < .gitignore
-
 # Set the maximum depth
 # Change this value to adjust the number of levels the script will print
 max_depth=3
 
+# Set use of .gitignore
+# Change this value to false if you don't want to use .gitignore
+use_gitignore=true
+
+# Read .gitignore and convert it to an array if use_gitignore is true
+if $use_gitignore; then
+    mapfile -t ignore < .gitignore
+fi
+
 print_folder_recurse() {
     for i in "$1"/*;do
         # Check if the file or directory is in .gitignore
-        for pattern in "${ignore[@]}"; do
-            if [[ $i == *$pattern* ]]; then
-                continue 2
-            fi
-        done
+        if $use_gitignore; then
+            for pattern in "${ignore[@]}"; do
+                if [[ $i == *$pattern* ]]; then
+                    continue 2
+                fi
+            done
+        fi
 
         depth=$((${2:-0}))
         spacing=$(printf "%*s" "$depth" "")
